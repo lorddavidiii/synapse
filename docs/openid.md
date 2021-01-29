@@ -402,19 +402,19 @@ Replace cloud.example.com with the domain of your cloud.
 
 
 ```yaml
-oidc_config:
-  enabled: true
-  issuer: "https://cloud.example.com/"
-  discover: false
-  client_id: "your-client-id" # TO BE FILLED
-  client_secret: "your-client-secret" # TO BE FILLED
-  authorization_endpoint: "https://cloud.example.com/apps/oauth2/authorize"
-  token_endpoint: "https://cloud.example.com/apps/oauth2/api/v1/token"
-  userinfo_endpoint: "https://cloud.example.com/ocs/v2.php/cloud/user?format=json"
-  scopes: []
-  user_mapping_provider:
-    config:
-      subject_claim: "ocs.data.id"
-      localpart_template: "{{ user.ocs.data.id|lower|replace(" ",".") }}"
-      display_name_template: "{{ user.ocs.data['display-name'] }}"
+  - idp_id: nextcloud
+    idp_name: Nextcloud
+    issuer: "https://cloud.example.com/"
+    discover: false
+    client_id: "your-client-id" # TO BE FILLED
+    client_secret: "your-client-secret" # TO BE FILLED
+    authorization_endpoint: "https://cloud.example.com/apps/oauth2/authorize"
+    token_endpoint: "https://cloud.example.com/apps/oauth2/api/v1/token"
+    userinfo_endpoint: "https://cloud.example.com/ocs/v2.php/cloud/user?format=json"
+    scopes: []
+    user_mapping_provider:
+      config:
+        subject_claim: "ocs.data.id"
+        localpart_template: "{{ user.ocs.data.id|lower|replace(" ",".") }}"
+        display_name_template: "{{ user.ocs.data['display-name'] }}"
 ```
