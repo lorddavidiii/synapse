@@ -148,6 +148,8 @@ class OIDCConfig(Config):
         #             subject_claim: name of the claim containing a unique identifier
         #                 for the user. Defaults to 'sub', which OpenID Connect
         #                 compliant providers should provide.
+        #                 If claim is nested in the userinfo json, you can access this
+        #                 with `.` seperated keys e.g. `key1.key2.claim`
         #
         #             localpart_template: Jinja2 template for the localpart of the MXID.
         #                 If this is not set, the user will be prompted to choose their

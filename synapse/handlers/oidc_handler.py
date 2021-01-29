@@ -1196,7 +1196,10 @@ class JinjaOidcMappingProvider(OidcMappingProvider[JinjaOidcMappingConfig]):
         )
 
     def get_remote_user_id(self, userinfo: UserInfo) -> str:
-        return userinfo[self._config.subject_claim]
+        user_id = userinfo
+        for key in self._config.subject_claim.split("."):
+            user_id = user_id[key]
+        return user_id
 
     async def map_user_attributes(
         self, userinfo: UserInfo, token: Token, failures: int
