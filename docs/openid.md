@@ -388,3 +388,33 @@ oidc_providers:
         localpart_template: "{{ user.login }}"
         display_name_template: "{{ user.full_name }}" 
 ```
+
+### Nextcloud
+
+Like GitHub Nextcloud is just a regular OAuth2 provider.
+Here also an altrnative `subject_claim` has to be set.
+Note that the userinfo json returned is nested, e.g. { "ocs": { "data": { "id: ... } } }
+For the localpart one should replace not allowed characters like it is done in the example config.
+Replace cloud.example.com with the domain of your cloud.
+
+1. Create a new OAuth 2.0 client: https://cloud.example.com/settings/admin/security
+2. Set the callback URL to `[synapse public baseurl]/_synapse/oidc/callback`.
+
+
+```yaml
+oidc_config:
+  enabled: true
+  issuer: "https://cloud.example.com/"
+  discover: false
+  client_id: "your-client-id" # TO BE FILLED
+  client_secret: "your-client-secret" # TO BE FILLED
+  authorization_endpoint: "https://cloud.example.com/apps/oauth2/authorize"
+  token_endpoint: "https://cloud.example.com/apps/oauth2/api/v1/token"
+  userinfo_endpoint: "https://cloud.example.com/ocs/v2.php/cloud/user?format=json"
+  scopes: []
+  user_mapping_provider:
+    config:
+      subject_claim: "ocs.data.id"
+      localpart_template: "{{ user.ocs.data.id|lower|replace(" ",".") }}"
+      display_name_template: "{{ user.ocs.data['display-name'] }}"
+```
